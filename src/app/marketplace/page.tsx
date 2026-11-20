@@ -1,10 +1,35 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
-const products = [
+type Product = {
+  id: string | number;
+  name: string;
+  category: string;
+  price: number;
+  location: string;
+  type: string;
+  condition: string;
+  images: string[];
+  createdAt?: string;
+};
+
+type SavedListing = {
+  id: string | number;
+  name: string;
+  category: string;
+  price: number;
+  location: string;
+  description?: string;
+  status: string;
+  image?: string;
+  images?: string[];
+  createdAt?: string;
+};
+
+const demoProducts: Product[] = [
   {
     id: 1,
     name: "Toyota Corolla 2015",
@@ -131,20 +156,100 @@ const categories = [
 const formatPrice = (price: number) =>
   `₦${price.toLocaleString("en-NG")}`;
 
+function getSavedProducts(): Product[] {
+  try {
+    const saved = localStorage.getItem("tradebridge_demo_listings");
+
+    if (!saved) return [];
+
+    const listings: SavedListing[] = JSON.parse(saved);
+
+    if (!Array.isArray(listings)) return [];
+
+    return listings
+      .filter(
+        (listing) =>
+          listing &&
+          listing.status === "Active" &&
+          listing.name &&
+          Number.isFinite(Number(listing.price))
+      )
+      .map((listing) => {
+        const images = Array.isArray(listing.images)
+          ? listing.images.filter(
+              (image): image is string => typeof image === "string"
+            )
+          : [];
+
+        if (images.length === 0 && listing.image) {
+          images.push(listing.image);
+        }
+
+        return {
+          id: `seller-${listing.id}`,
+          name: listing.name,
+          category: listing.category || "Other",
+          price: Number(listing.price),
+          location: listing.location || "Location not specified",
+          type: "Not specified",
+          condition: "Seller listing",
+          images,
+          createdAt: listing.createdAt,
+        };
+      });
+  } catch (error) {
+    console.error("Unable to load marketplace listings:", error);
+    return [];
+  }
+}
+
 export default function MarketplacePage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All Categories");
   const [location, setLocation] = useState("All Locations");
   const [tradeType, setTradeType] = useState("All Types");
   const [sort, setSort] = useState("newest");
+  const [sellerProducts, setSellerProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const loadListings = () => {
+      setSellerProducts(getSavedProducts());
+    };
+
+    loadListings();
+
+    window.addEventListener("storage", loadListings);
+    window.addEventListener("focus", loadListings);
+
+    return () => {
+      window.removeEventListener("storage", loadListings);
+      window.removeEventListener("focus", loadListings);
+    };
+  }, []);
+
+  const products = useMemo(
+    () => [...sellerProducts, ...demoProducts],
+    [sellerProducts]
+  );
+
+  const locations = useMemo(
+    () => [
+      "All Locations",
+      ...Array.from(
+        new Set(products.map((product) => product.location).filter(Boolean))
+      ).sort(),
+    ],
+    [products]
+  );
 
   const filteredProducts = useMemo(() => {
     let result = products.filter((product) => {
-      const searchTerm = search.toLowerCase();
+      const searchTerm = search.toLowerCase().trim();
 
       const matchesSearch =
         product.name.toLowerCase().includes(searchTerm) ||
-        product.category.toLowerCase().includes(searchTerm);
+        product.category.toLowerCase().includes(searchTerm) ||
+        product.location.toLowerCase().includes(searchTerm);
 
       const matchesCategory =
         category === "All Categories" ||
@@ -177,8 +282,21 @@ export default function MarketplacePage() {
       result = [...result].sort((a, b) => b.price - a.price);
     }
 
+    if (sort === "newest") {
+      result = [...result].sort((a, b) => {
+        const dateA = a.createdAt
+          ? new Date(a.createdAt).getTime()
+          : 0;
+        const dateB = b.createdAt
+          ? new Date(b.createdAt).getTime()
+          : 0;
+
+        return dateB - dateA;
+      });
+    }
+
     return result;
-  }, [search, category, location, tradeType, sort]);
+  }, [products, search, category, location, tradeType, sort]);
 
   const resetFilters = () => {
     setSearch("");
@@ -212,10 +330,10 @@ export default function MarketplacePage() {
           </nav>
 
           <Link
-            href="/"
+            href="/sell"
             className="rounded-full bg-[#102b46] px-5 py-3 text-sm font-bold text-white hover:bg-[#20b486]"
           >
-            Get Started
+            Sell a Product
           </Link>
         </div>
       </header>
@@ -245,6 +363,7 @@ export default function MarketplacePage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="What are you looking for?"
+              aria-label="Search products"
               className="min-w-0 flex-1 rounded-xl px-4 py-4 text-sm text-gray-900 outline-none"
             />
 
@@ -311,12 +430,11 @@ export default function MarketplacePage() {
               onChange={(e) => setLocation(e.target.value)}
               className="w-full rounded-xl border border-gray-200 bg-white p-3 text-sm outline-none focus:border-[#20b486]"
             >
-              <option>All Locations</option>
-              <option>Lagos</option>
-              <option>Abuja</option>
-              <option>Ibadan</option>
-              <option>Kano</option>
-              <option>Port Harcourt</option>
+              {locations.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -363,12 +481,18 @@ export default function MarketplacePage() {
                 className="block overflow-hidden rounded-2xl border border-gray-200 bg-white transition hover:-translate-y-1 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#20b486]"
               >
                 <div className="relative h-52 overflow-hidden bg-[#edf3f7]">
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                  />
+                  {product.images[0] ? (
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition duration-500 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-sm text-gray-400">
+                      No product image
+                    </div>
+                  )}
 
                   <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#102b46]">
                     {product.condition}
