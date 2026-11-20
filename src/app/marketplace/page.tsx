@@ -12,9 +12,12 @@ const products = [
     price: 12500000,
     location: "Lagos",
     type: "Cash or Trade",
-    image:
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=85",
     condition: "Used",
+    images: [
+      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=85",
+    ],
   },
   {
     id: 2,
@@ -23,9 +26,12 @@ const products = [
     price: 1250000,
     location: "Abuja",
     type: "Cash or Trade",
-    image:
-      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85",
     condition: "Foreign Used",
+    images: [
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=900&q=85",
+    ],
   },
   {
     id: 3,
@@ -34,9 +40,12 @@ const products = [
     price: 850000,
     location: "Ibadan",
     type: "Cash Only",
-    image:
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=85",
     condition: "New",
+    images: [
+      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1550254478-ead40cc54513?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1550581190-9f4c7e7c3e6c?auto=format&fit=crop&w=900&q=85",
+    ],
   },
   {
     id: 4,
@@ -45,9 +54,12 @@ const products = [
     price: 85000,
     location: "Kano",
     type: "Cash or Trade",
-    image:
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=85",
     condition: "New",
+    images: [
+      "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=900&q=85",
+    ],
   },
   {
     id: 5,
@@ -56,9 +68,12 @@ const products = [
     price: 650000,
     location: "Lagos",
     type: "Cash or Trade",
-    image:
-      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=85",
     condition: "Used",
+    images: [
+      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=85",
+    ],
   },
   {
     id: 6,
@@ -67,9 +82,12 @@ const products = [
     price: 475000,
     location: "Port Harcourt",
     type: "Cash Only",
-    image:
-      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=85",
     condition: "New",
+    images: [
+      "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1513467655676-561b7d489a88?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=85",
+    ],
   },
   {
     id: 7,
@@ -78,9 +96,12 @@ const products = [
     price: 18500000,
     location: "Abuja",
     type: "Cash or Trade",
-    image:
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=85",
     condition: "Foreign Used",
+    images: [
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=85",
+    ],
   },
   {
     id: 8,
@@ -89,9 +110,12 @@ const products = [
     price: 320000,
     location: "Lagos",
     type: "Cash or Trade",
-    image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85",
     condition: "New",
+    images: [
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=85",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=85",
+    ],
   },
 ];
 
@@ -116,9 +140,11 @@ export default function MarketplacePage() {
 
   const filteredProducts = useMemo(() => {
     let result = products.filter((product) => {
+      const searchTerm = search.toLowerCase();
+
       const matchesSearch =
-        product.name.toLowerCase().includes(search.toLowerCase()) ||
-        product.category.toLowerCase().includes(search.toLowerCase());
+        product.name.toLowerCase().includes(searchTerm) ||
+        product.category.toLowerCase().includes(searchTerm);
 
       const matchesCategory =
         category === "All Categories" ||
@@ -164,7 +190,6 @@ export default function MarketplacePage() {
 
   return (
     <main className="min-h-screen bg-[#f7f9fc] text-[#102b46]">
-
       {/* HEADER */}
       <header className="border-b border-gray-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5">
@@ -339,7 +364,7 @@ export default function MarketplacePage() {
               >
                 <div className="relative h-52 overflow-hidden bg-[#edf3f7]">
                   <img
-                    src={product.image}
+                    src={product.images[0]}
                     alt={product.name}
                     loading="lazy"
                     className="h-full w-full object-cover transition duration-500 hover:scale-105"
@@ -347,6 +372,10 @@ export default function MarketplacePage() {
 
                   <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#102b46]">
                     {product.condition}
+                  </span>
+
+                  <span className="absolute bottom-3 right-3 rounded-full bg-black/65 px-3 py-1 text-xs font-semibold text-white">
+                    {product.images.length} photos
                   </span>
                 </div>
 
